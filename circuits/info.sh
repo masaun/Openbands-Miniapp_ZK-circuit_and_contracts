@@ -1,5 +1,5 @@
 echo "Show the size of the ZK circuit..."
-bb gates -b target/verified_anonymous_sns_jwt.json | grep "circuit"
+bb gates -b target/openbands_miniapp.json | grep "circuit"
 
 # Logs:
 #

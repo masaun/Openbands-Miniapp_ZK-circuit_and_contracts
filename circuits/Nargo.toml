@@ -1,5 +1,5 @@
 [package]
-name = "verified_anonymous_sns_jwt"
+name = "openbands_miniapp"
 type = "bin"
 authors = ["masaun"]
 compiler_version = ">=1.0.0"

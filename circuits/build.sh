@@ -24,18 +24,18 @@ if ! nargo compile; then
 fi
 
 echo "Gate count:"
-bb gates -b target/verified_anonymous_sns_jwt.json | jq  '.functions[0].circuit_size'
+bb gates -b target/openbands_miniapp.json | jq  '.functions[0].circuit_size'
 
 #echo "Create version-specific directory"
 
 echo "Create the target/vk directory..."
 mkdir -p "target/vk"
 
-echo "Copying verified_anonymous_sns_jwt.json and paste to the ./circuit directory..."
-cp target/verified_anonymous_sns_jwt.json "../verified_anonymous_sns_jwt.json"
+echo "Copying openbands_miniapp.json and paste to the ./circuit directory..."
+cp target/openbands_miniapp.json "../openbands_miniapp.json"
 
 echo "Generating vkey in the ./target/vk directory..."
-bb write_vk -b ./target/verified_anonymous_sns_jwt.json -o ./target/vk --oracle_hash keccak
+bb write_vk -b ./target/openbands_miniapp.json -o ./target/vk --oracle_hash keccak
 
 #echo "Generating vkey.json to app/assets/jwt..."
 #node -e "const fs = require('fs'); fs.writeFileSync('../app/assets/jwt/circuit-vkey.json', JSON.stringify(Array.from(Uint8Array.from(fs.readFileSync('./target/vk')))));"
