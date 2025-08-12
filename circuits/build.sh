@@ -31,8 +31,8 @@ bb gates -b target/openbands_miniapp.json | jq  '.functions[0].circuit_size'
 echo "Create the target/vk directory..."
 mkdir -p "target/vk"
 
-echo "Copying openbands_miniapp.json and paste to the ./circuit directory..."
-cp target/openbands_miniapp.json "../openbands_miniapp.json"
+#echo "Copying openbands_miniapp.json and paste to the ./circuit directory..."
+#cp target/openbands_miniapp.json "../openbands_miniapp.json"
 
 echo "Generating vkey in the ./target/vk directory..."
 bb write_vk -b ./target/openbands_miniapp.json -o ./target/vk --oracle_hash keccak
@@ -44,9 +44,9 @@ echo "Generate a Solidity Verifier contract from the vkey..."
 bb write_solidity_verifier -k ./target/vk/vk -o ./target/Verifier.sol
 
 echo "Copy a Solidity Verifier contract-generated (Verifier.sol) into the ./contracts/src/circuits/zk-jwt/honk-verifier directory"
-cp ./target/Verifier.sol ../../contracts/src/circuits/zk-jwt/honk-verifier
+cp ./target/Verifier.sol ../contracts/src/circuits/zk-jwt/honk-verifier
 
 echo "Rename the Verifier.sol with the honk_vk.sol in the ./contracts/circuit/ultra-verifier directory"
-mv ../../contracts/src/circuits/zk-jwt/honk-verifier/Verifier.sol ../../contracts/src/circuits/zk-jwt/honk-verifier/honk_vk.sol
+mv ../contracts/src/circuits/zk-jwt/honk-verifier/Verifier.sol ../contracts/src/circuits/zk-jwt/honk-verifier/honk_vk.sol
 
 echo "Done"
