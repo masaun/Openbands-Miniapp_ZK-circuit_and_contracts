@@ -1,6 +1,6 @@
-mod zkjwt;
+mod zk_jwt;
 
-use zkjwt::{
+use zk_jwt::{
     utils::{decimal_string_to_field, get_domain_start_index_in_email},
     nullifier_generator::{generate_nullifier},
 };
