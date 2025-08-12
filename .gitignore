@@ -1,0 +1,17 @@
+target/
+build/
+.DS_Store
+
+# Environment files
+.env
+
+# Smart contracts
+out/
+cache/
+
+# Smart contracts test
+Cargo.lock
+
+# Node modules
+node_modules/
+package-lock.json
