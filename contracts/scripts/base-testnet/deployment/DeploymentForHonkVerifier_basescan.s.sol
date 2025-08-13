@@ -9,7 +9,7 @@ import { HonkVerifier } from "../../../src/circuits/zk-jwt/honk-verifier/honk_vk
  * @notice - Deployment script to deploy all SCs at once - on BASE Mainnet
  */
 contract DeploymentForHonkVerifier_basescan is Script {
-    UltraVerifier public verifier;
+    HonkVerifier public verifier;
 
     function setUp() public {}
 
