@@ -17,11 +17,10 @@ contract DeploymentForZkJwtProofVerifier_basescan is Script {
     function setUp() public {}
 
     function run() public {
+        vm.createSelectFork("base_testnet");  // [NOTE]: foundry.toml - BASE Testnet RPC URL
+        //vm.createSelectFork("hhttps://sepolia.base.org");
 
-        vm.createSelectFork("https://mainnet.base.org"); // @dev - [NOTE]: Hardcoded the Base Mainnet RPC URL - Instead of using the environment variable via the foundry.toml
-        //vm.createSelectFork('base-mainnet');
-
-        uint256 deployerPrivateKey = vm.envUint("BASE_MAINNET_PRIVATE_KEY");
+        uint256 deployerPrivateKey = vm.envUint("BASE_TESTNET_PRIVATE_KEY");
         //uint256 deployerPrivateKey = vm.envUint("LOCALHOST_PRIVATE_KEY");
         vm.startBroadcast(deployerPrivateKey);
         //vm.startBroadcast();
