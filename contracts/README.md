@@ -1,52 +1,39 @@
 # Smart Contracts
 
 
-## Smart Contract Test in `Rust` using `Alloy.rs`
 
-- Run the all smart contract tests
+
+## Smart Contract Deployment on BASE `testnet`
+
+- NOTE: This script file must be run from the `root` directory of this project, where is the location of `.env` file.
 ```bash
 cd contracts
-cargo test
+sh scripts/base-testnet/deployment/deploymentScript_HonkVerifier_via_basescan.sh
+```
+```bash
+cd contracts
+sh scripts/base-testnet/deployment/deploymentScript_ZkJwtProofVerifier_via_basescan.sh
+```
+```bash
+cd contracts
+sh scripts/base-testnet/deployment/deploymentScript_ZkJwtProofManager_via_basescan.sh
 ```
 
 <br>
 
-- Run the `test_honk_verifier.rs`
+## Smart Contract Deployment on BASE `mainnet`
+
+- NOTE: This script file must be run from the `root` directory of this project, where is the location of `.env` file.
 ```bash
 cd contracts
-sh test/circuits/zk-jwt/honk_verifier/test_honk_verifier.sh
-
-(Or, cargo test --test test_honk_verifier -- --show-output)
+sh scripts/base-mainnet/deployment/deploymentScript_HonkVerifier_via_basescan.sh
 ```
-
-<br>
-
-- Run the `test_zk_jwt_proof_verifier.rs`
 ```bash
 cd contracts
-sh test/circuits/zk-jwt/test_zk_jwt_proof_verifier.sh
-
-(Or, cargo test --test test_zk_jwt_proof_verifier -- --show-output)
+sh scripts/base-mainnet/deployment/deploymentScript_ZkJwtProofVerifier_via_basescan.sh
 ```
-
-<br>
-
-- Run the `test_zk_jwt_proof_manager.rs`
 ```bash
 cd contracts
-sh test/circuits/zk-jwt/test_zk_jwt_proof_manager.sh
-
-(Or, cargo test --test test_zk_jwt_proof_manager -- --show-output)
+sh scripts/base-mainnet/deployment/deploymentScript_ZkJwtProofManager_via_basescan.sh
 ```
 
-<br>
-
-## Proof Geration Test in `Rust`
-
-- Run the `test_proof_generation.rs`
-```bash
-cd contracts
-sh test/circuits/zk-jwt/proof_generator/test_proof_generation.sh
-
-(Or, cargo test --test test_proof_generation -- --show-output)
-```
