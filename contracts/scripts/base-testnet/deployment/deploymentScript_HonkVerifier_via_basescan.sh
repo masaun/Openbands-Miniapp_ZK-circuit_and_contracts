@@ -2,6 +2,7 @@ echo "Compile the smart contract files..."
 sh compileContracts.sh
 
 echo "Load the environment variables from the .env file..."
+#source .env
 . ./.env
 
 echo "Deploying & Verifying the HonkVerifier contract on BASE Testnet (via BaseScan)..."
