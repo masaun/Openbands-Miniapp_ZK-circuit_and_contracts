@@ -26,7 +26,7 @@ contract DeploymentForZkJwtProofVerifier_basescan is Script {
         //vm.startBroadcast();
 
         /// @dev - Deploy SCs
-        verifier = HonkVerifier(vm.envAddress("HONKVERIFIER_ON_BASE_MAINNET"));
+        verifier = HonkVerifier(vm.envAddress("HONK_VERIFIER_ON_BASE_TESTNET"));
         //verifier = new HonkVerifier();
         zkJwtProofVerifier = new ZkJwtProofVerifier(verifier);
 
