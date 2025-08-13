@@ -5,9 +5,11 @@ build/
 # Environment files
 .env
 
-# Smart contracts
-out/
+# Smart contracts - Foundry
 cache/
+out/
+broadcast
+contracts/lib/*
 
 # Smart contracts test
 Cargo.lock
