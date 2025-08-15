@@ -42,9 +42,9 @@ fn main(
     jwt_pubkey_redc_params_limbs: [u128; 18],
     jwt_signature_limbs: [u128; 18],
     domain: pub BoundedVec<u8, MAX_DOMAIN_LENGTH>,
-    ephemeral_pubkey: pub Field,
-    ephemeral_pubkey_salt: Field,
-    ephemeral_pubkey_expiry: pub u32,
+    //ephemeral_pubkey: pub Field,
+    //ephemeral_pubkey_salt: Field,
+    //ephemeral_pubkey_expiry: pub u32,
 ) -> pub Field {
     // Init JWT struct and verify signature
     let jwt = JWT::init_with_partial_hash(
@@ -58,17 +58,17 @@ fn main(
     );
     jwt.verify();
 
-    // Get nonce claim
-    let nonce: BoundedVec<u8, NONCE_LENGTH> = jwt.get_claim_string("nonce".as_bytes());
-    let nonce_field: Field = decimal_string_to_field(nonce.storage());
+    // // Get nonce claim
+    // let nonce: BoundedVec<u8, NONCE_LENGTH> = jwt.get_claim_string("nonce".as_bytes());
+    // let nonce_field: Field = decimal_string_to_field(nonce.storage());
 
-    // Verify nonce is the hash(ephemeral_pubkey, ephemeral_pubkey_salt, ephemeral_pubkey_expiry)
-    let ephemeral_pubkey_hash = Poseidon2::hash(
-        [ephemeral_pubkey, ephemeral_pubkey_salt, ephemeral_pubkey_expiry as Field],
-        3,
-    );
+    // // Verify nonce is the hash(ephemeral_pubkey, ephemeral_pubkey_salt, ephemeral_pubkey_expiry)
+    // let ephemeral_pubkey_hash = Poseidon2::hash(
+    //     [ephemeral_pubkey, ephemeral_pubkey_salt, ephemeral_pubkey_expiry as Field],
+    //     3,
+    // );
 
-    assert(nonce_field == ephemeral_pubkey_hash, "invalid nonce");
+    // assert(nonce_field == ephemeral_pubkey_hash, "invalid nonce");
 
     // Assert email_verified claim
     jwt.assert_claim_bool("email_verified".as_bytes(), true);
@@ -86,7 +86,8 @@ fn main(
     }
 
     // @dev - Calculate a nullifier
-    let nullifier = generate_nullifier([ephemeral_pubkey_hash, full_data_length as Field, base64_decode_offset as Field]);
+    let nullifier = generate_nullifier([full_data_length as Field, base64_decode_offset as Field]);
+    //let nullifier = generate_nullifier([ephemeral_pubkey_hash, full_data_length as Field, base64_decode_offset as Field]);
 
     // @dev - Return the nullifier
     nullifier
