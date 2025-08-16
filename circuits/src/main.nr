@@ -38,7 +38,7 @@ fn main(
     partial_hash: [u32; 8],
     full_data_length: u32,
     base64_decode_offset: u32,
-    jwt_pubkey_modulus_limbs: pub [u128; 18],
+    jwt_pubkey_modulus_limbs: [u128; 18],
     jwt_pubkey_redc_params_limbs: [u128; 18],
     jwt_signature_limbs: [u128; 18],
     domain: pub BoundedVec<u8, MAX_DOMAIN_LENGTH>,
