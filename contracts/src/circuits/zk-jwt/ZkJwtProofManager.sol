@@ -75,6 +75,13 @@ contract ZkJwtProofManager {
     }
 
     /**
+     * @notice - Check if a nullifierHash is already stored on-chain.
+     */
+    function isNullifierAlreadyStoredOnChain(bytes32 nullifierHash) public view returns (bool) {
+        return nullifiers[nullifierHash];
+    }
+
+    /**
      * @notice - Retrieve the nullifierHash by a caller's wallet address.
      */
     function getNullifierByWalletAddress() public view returns (bytes32 _nullifierHash) {
