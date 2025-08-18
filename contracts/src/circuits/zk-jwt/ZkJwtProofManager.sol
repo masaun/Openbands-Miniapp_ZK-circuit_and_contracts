@@ -12,8 +12,9 @@ contract ZkJwtProofManager {
     ZkJwtProofVerifier public zkJwtProofVerifier;
 
     // @dev - Storages
-    mapping(bytes32 nullifierHash => DataType.PublicInput) public publicInputsOfZkJwtProofs;  // nullifierHash -> PublicInput    
-    mapping(bytes32 nullifierHash => bool isNullified) public nullifiers;
+    mapping(bytes32 nullifierHash => DataType.PublicInput) public publicInputsOfZkJwtProofs;     // nullifierHash -> PublicInput    
+    mapping(bytes32 nullifierHash => bool isNullified) public nullifiers;                        
+    mapping(address walletAddress => bytes32 nullifierHash) public nullifiersByWalletAddresses;  // walletAddress -> nullifierHash
     DataType.PublicInput[] public publicInputsOfAllProofs;  // The publicInputs of all ZK-JWT proofs to show the list of all proofs related data on FE (front-end).
 
     constructor(
@@ -34,11 +35,15 @@ contract ZkJwtProofManager {
         bool result = zkJwtProofVerifier.verifyZkJwtProof(proof, publicInputs);
         require(result, "A given ZK-JWT proof is not valid");
 
+        // @dev - Validation whether a caller address correspond to a wallet address to be stored
+        require(msg.sender == separatedPublicInputs.walletAddress, "A caller address must be a given separatedPublicInputs.walletAddress");
+
         // @dev - Record a publicInput of a given ZK-JWT proof
         DataType.PublicInput memory publicInput;
         //publicInput.jwtPubkeyModulusLimbs = separatedPublicInputs.jwtPubkeyModulusLimbs;
         publicInput.domain = separatedPublicInputs.domain;
         publicInput.nullifierHash = separatedPublicInputs.nullifierHash;
+        publicInput.walletAddress = separatedPublicInputs.walletAddress;
         publicInput.createdAt = separatedPublicInputs.createdAt;
         //publicInput.createdAt = block.timestamp;
 
@@ -50,6 +55,9 @@ contract ZkJwtProofManager {
 
         // @dev - Store the nullifierHash to prevent double submission of the same email
         nullifiers[publicInput.nullifierHash] = true;
+
+        // @dev - Store a given nullifierHash
+        nullifiersByWalletAddresses[msg.sender] = publicInput.nullifierHash;
 
         // @dev - Store the publicInputs into the list of all proofs to be displayed on the UI (front-end).
         publicInputsOfAllProofs.push(publicInput);
@@ -64,6 +72,13 @@ contract ZkJwtProofManager {
     function getPublicInputsOfZkJwtProof(bytes32 nullifierHash) public view returns (DataType.PublicInput memory _publicInput) {
         require(nullifiers[nullifierHash] == true, "A given nullifierHash is invalid"); // Double spending (of proof) prevention
         return publicInputsOfZkJwtProofs[nullifierHash];
+    }
+
+    /**
+     * @notice - Retrieve the nullifierHash by a caller's wallet address.
+     */
+    function getNullifierByWalletAddress() public view returns (bytes32 _nullifierHash) {
+        return nullifiersByWalletAddresses[msg.sender];
     }
 
     /**
