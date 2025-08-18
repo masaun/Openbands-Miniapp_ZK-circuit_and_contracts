@@ -35,11 +35,15 @@ contract ZkJwtProofManager {
         bool result = zkJwtProofVerifier.verifyZkJwtProof(proof, publicInputs);
         require(result, "A given ZK-JWT proof is not valid");
 
+        // @dev - Validation whether a caller address correspond to a wallet address to be stored
+        require(msg.sender == separatedPublicInputs.walletAddress, "A caller address must be a given separatedPublicInputs.walletAddress");
+
         // @dev - Record a publicInput of a given ZK-JWT proof
         DataType.PublicInput memory publicInput;
         //publicInput.jwtPubkeyModulusLimbs = separatedPublicInputs.jwtPubkeyModulusLimbs;
         publicInput.domain = separatedPublicInputs.domain;
         publicInput.nullifierHash = separatedPublicInputs.nullifierHash;
+        publicInput.walletAddress = separatedPublicInputs.walletAddress;
         publicInput.createdAt = separatedPublicInputs.createdAt;
         //publicInput.createdAt = block.timestamp;
 
