@@ -8,7 +8,7 @@ import { ZkJwtProofVerifier } from "../../../src/circuits/zk-jwt/ZkJwtProofVerif
 
 
 /**
- * @notice - Deployment script to deploy the ZkJwtProofVerifier SC - on BASE Testnet
+ * @notice - Deployment script to deploy the ZkJwtProofVerifier SC - on BASE Mainnet
  */
 contract DeploymentForZkJwtProofVerifier_basescan is Script {
     HonkVerifier public verifier;
@@ -17,23 +17,23 @@ contract DeploymentForZkJwtProofVerifier_basescan is Script {
     function setUp() public {}
 
     function run() public {
-        vm.createSelectFork("base_testnet");  // [NOTE]: foundry.toml - BASE Testnet RPC URL
-        //vm.createSelectFork("hhttps://sepolia.base.org");
+        vm.createSelectFork("base_mainnet");  // [NOTE]: foundry.toml - BASE Mainnet RPC URL
+        //vm.createSelectFork("https://mainnet.base.org");
 
-        uint256 deployerPrivateKey = vm.envUint("BASE_TESTNET_PRIVATE_KEY");
+        uint256 deployerPrivateKey = vm.envUint("BASE_MAINNET_PRIVATE_KEY");
         //uint256 deployerPrivateKey = vm.envUint("LOCALHOST_PRIVATE_KEY");
         vm.startBroadcast(deployerPrivateKey);
         //vm.startBroadcast();
 
         /// @dev - Deploy SCs
-        verifier = HonkVerifier(vm.envAddress("HONK_VERIFIER_ON_BASE_TESTNET"));
+        verifier = HonkVerifier(vm.envAddress("HONK_VERIFIER_ON_BASE_MAINNET"));
         //verifier = new HonkVerifier();
         zkJwtProofVerifier = new ZkJwtProofVerifier(verifier);
 
         vm.stopBroadcast();
 
-        /// @dev - Logs of the deployed-contracts on BASE Testnet
-        console.logString("Logs of the deployed-contracts on BASE Testnet");
+        /// @dev - Logs of the deployed-contracts on BASE Mainnet
+        console.logString("Logs of the deployed-contracts on BASE Mainnet");
         console.logString("\n");
         console.log("%s: %s", "HonkVerifier SC", address(verifier));
         console.logString("\n");
