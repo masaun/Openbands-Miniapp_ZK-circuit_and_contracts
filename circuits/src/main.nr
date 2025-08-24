@@ -1,4 +1,5 @@
 mod zk_jwt;
+mod tests;
 
 use zk_jwt::{
     utils::{decimal_string_to_field, get_domain_start_index_in_email},
