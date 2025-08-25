@@ -3,7 +3,10 @@ mod tests;
 
 use zk_jwt::{
     utils::{decimal_string_to_field, get_domain_start_index_in_email},
-    nullifier_generator::{generate_nullifier},
+    nullifier_generator::{
+        generate_nullifier_with_poseidon2,
+        generate_nullifier_with_pedersen,
+    },
 };
 
 use jwt::JWT;
@@ -87,7 +90,8 @@ fn main(
     }
 
     // @dev - Calculate a nullifier
-    let nullifier = generate_nullifier([full_data_length as Field, base64_decode_offset as Field]);
+    //let nullifier = generate_nullifier_with_poseidon2([full_data_length as Field, base64_decode_offset as Field]);
+    let nullifier = generate_nullifier_with_pedersen([full_data_length as Field, base64_decode_offset as Field]);
     //let nullifier = generate_nullifier([ephemeral_pubkey_hash, full_data_length as Field, base64_decode_offset as Field]);
 
     // @dev - Return the nullifier
