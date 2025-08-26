@@ -91,8 +91,9 @@ fn main(
 
     // @dev - Calculate a nullifier
     //let nullifier = generate_nullifier_with_poseidon2([full_data_length as Field, base64_decode_offset as Field]);
-    let nullifier = generate_nullifier_with_pedersen([full_data_length as Field, base64_decode_offset as Field]);
+    //let nullifier = generate_nullifier_with_pedersen([full_data_length as Field, base64_decode_offset as Field]);
     //let nullifier = generate_nullifier([ephemeral_pubkey_hash, full_data_length as Field, base64_decode_offset as Field]);
+    let nullifier: Field = 1; // [NOTE]: This is a test value
 
     // @dev - Return the nullifier
     nullifier
