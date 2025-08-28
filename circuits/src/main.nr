@@ -45,7 +45,7 @@ fn main(
     jwt_pubkey_modulus_limbs: [u128; 18],
     jwt_pubkey_redc_params_limbs: [u128; 18],
     jwt_signature_limbs: [u128; 18],
-    domain: pub BoundedVec<u8, MAX_DOMAIN_LENGTH>,
+    domain: pub BoundedVec<u8, MAX_DOMAIN_LENGTH>
     //ephemeral_pubkey: pub Field,
     //ephemeral_pubkey_salt: Field,
     //ephemeral_pubkey_expiry: pub u32,

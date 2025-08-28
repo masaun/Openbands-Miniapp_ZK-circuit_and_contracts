@@ -26,14 +26,14 @@ use super::test_input_data::{
 #[test]
 pub fn test_main() {
     // @dev - Test values for the main function
-    // let partial_data: BoundedVec<u8, MAX_PARTIAL_DATA_LENGTH> = PARTIAL_DATA;
-    // let partial_hash: [u32; 8] = PARTIAL_HASH;
-    // let full_data_length: u32 = FULL_DATA_LENGTH;
-    // let base64_decode_offset: u32 = BASE64_DECODE_OFFSET;
-    // let jwt_pubkey_modulus_limbs: [u128; 18] = JWT_PUBKEY_MODULUS_LIMBS;
-    // let jwt_pubkey_redc_params_limbs: [u128; 18] = JWT_PUBKEY_REDC_PARAMS_LIMBS;
-    // let jwt_signature_limbs: [u128; 18] = JWT_SIGNATURE_LIMBS;
-    // let domain: BoundedVec<u8, MAX_DOMAIN_LENGTH> = DOMAIN;
+    let partial_data: BoundedVec<u8, MAX_PARTIAL_DATA_LENGTH> = PARTIAL_DATA;
+    let partial_hash: [u32; 8] = PARTIAL_HASH;
+    let full_data_length: u32 = FULL_DATA_LENGTH;
+    let base64_decode_offset: u32 = BASE64_DECODE_OFFSET;
+    let jwt_pubkey_modulus_limbs: [u128; 18] = JWT_PUBKEY_MODULUS_LIMBS;
+    let jwt_pubkey_redc_params_limbs: [u128; 18] = JWT_PUBKEY_REDC_PARAMS_LIMBS;
+    let jwt_signature_limbs: [u128; 18] = JWT_SIGNATURE_LIMBS;
+    let domain: BoundedVec<u8, MAX_DOMAIN_LENGTH> = DOMAIN;
 
     // @dev - Test values for the main function (which is same with the zkGlassdoor's one)
     // @dev - [Result]: Successful to pass the test for the main()
