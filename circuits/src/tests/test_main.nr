@@ -5,6 +5,7 @@ use crate::{
 };
 
 use zk_jwt::{
+    extra_zeros_removal::{remove_extra_zeros_from_partial_data},
     utils::{decimal_string_to_field, get_domain_start_index_in_email},
     nullifier_generator::{
         generate_nullifier_with_poseidon2,
@@ -47,8 +48,15 @@ pub fn test_main() {
     // let jwt_signature_limbs: [u128; 18] = [782421962573548264472674190647943355, 528649442614902878048130358901749842, 795671681115216636642039527621785323, 342055983261463759066440970886912343, 320943042314824191484469254030368420, 233931545977215775766660875366648712, 166738968145911552289782464945436391, 1280090914380823160665554635957223606, 225322564371992173705155119766257284, 1012067778676730712845356243167441596, 337008035250054394089555850701430953, 441480997772890594691718538441538925, 1266099611422563733802354067242028554, 163890419575820619684088542045789366, 71236811945264458762129145425586273, 106105739687938386497215871288359508, 598323717706499880526430558338637686, 97];
     // let domain: BoundedVec<u8, MAX_DOMAIN_LENGTH> = BoundedVec::from_array([116,101,115,116,46,99,111,109]); // "test.com"
 
+    // @dev - Remove extra zeros, which are added to an original "partial_data" when it is inputted from the frontend, from an original "partial_data"
+    // @dev - [NOTE]: Applied the remove_extra_zeros_from_partial_data() function to the main.nr - Hence, the following line can be commented out.
+    //let _partial_data: BoundedVec<u8, MAX_PARTIAL_DATA_LENGTH> = unsafe { remove_extra_zeros_from_partial_data(partial_data) };
+    //println(f"_partial_data: {_partial_data}\n");
+
+    // @dev - Execute the main() function
     let nullifier = main(
         partial_data,
+        //_partial_data, // @dev - [NOTE]: Applied the remove_extra_zeros_from_partial_data() function to the main.nr - Hence, the following line can be commented out.
         partial_hash,
         full_data_length,
         base64_decode_offset,
