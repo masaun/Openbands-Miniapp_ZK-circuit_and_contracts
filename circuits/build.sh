@@ -6,17 +6,17 @@ echo "Circuit version: $VERSION"
 rm -rf target
 
 # Install Noir/Nargo
-echo "Install the Noir/Nargo v1.0.0-beta.6..."
-noirup --version 1.0.0-beta.6
+#echo "Install the Noir/Nargo v1.0.0-beta.6..."
+#noirup --version 1.0.0-beta.6
 
 # Align the Noir/Nargo version (1.0.0-beta.6) and bb.js version (>= 0.85.0) of the local machine.
-echo "Install the bb.js version v0.85.0..."
-bbup --version 0.85.0
+#echo "Install the bb.js version v0.87.9..."
+#bbup --version 0.87.9
 
 echo "Check the Noir/Nargo version version of the local machine (This version is supposed to be v1.0.0-beta.6)..."
 nargo -V
 
-echo "Check the bb.js version of the local machine (This version is supposed to be v0.85.0)..."
+echo "Check the bb.js version of the local machine (This version is supposed to be v0.87.9)..."
 bb --version
 
 echo "Compiling circuit..."
