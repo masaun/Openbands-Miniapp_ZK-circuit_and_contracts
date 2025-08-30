@@ -50,9 +50,16 @@ fn main(
     //ephemeral_pubkey_salt: Field,
     //ephemeral_pubkey_expiry: pub u32,
 ) -> pub Field {
+    // @dev - Remove the "zeros" from a given "partial_data" and "domain".
+    // let partial_data = partial_data.trim_zeros();
+    // let domain = domain.trim_zeros();
+    let _partial_data: BoundedVec<u8, _> = partial_data;
+    let _domain: BoundedVec<u8, _> = domain;
+
     // Init JWT struct and verify signature
     let jwt = JWT::init_with_partial_hash(
-        partial_data,
+        //partial_data,
+        _partial_data,
         partial_hash,
         full_data_length,
         base64_decode_offset,
