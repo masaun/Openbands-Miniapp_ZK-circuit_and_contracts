@@ -49,13 +49,14 @@ pub fn test_main() {
     // let domain: BoundedVec<u8, MAX_DOMAIN_LENGTH> = BoundedVec::from_array([116,101,115,116,46,99,111,109]); // "test.com"
 
     // @dev - Remove extra zeros, which are added to an original "partial_data" when it is inputted from the frontend, from an original "partial_data"
-    let _partial_data: BoundedVec<u8, MAX_PARTIAL_DATA_LENGTH> = unsafe { remove_extra_zeros_from_partial_data(partial_data) };
-    println(f"_partial_data: {_partial_data}\n");
+    // @dev - [NOTE]: Applied the remove_extra_zeros_from_partial_data() function to the main.nr - Hence, the following line can be commented out.
+    //let _partial_data: BoundedVec<u8, MAX_PARTIAL_DATA_LENGTH> = unsafe { remove_extra_zeros_from_partial_data(partial_data) };
+    //println(f"_partial_data: {_partial_data}\n");
 
     // @dev - Execute the main() function
     let nullifier = main(
-        //partial_data,
-        _partial_data,
+        partial_data,
+        //_partial_data, // @dev - [NOTE]: Applied the remove_extra_zeros_from_partial_data() function to the main.nr - Hence, the following line can be commented out.
         partial_hash,
         full_data_length,
         base64_decode_offset,

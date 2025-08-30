@@ -2,6 +2,7 @@ mod zk_jwt;
 mod tests;
 
 use zk_jwt::{
+    extra_zeros_removal::{remove_extra_zeros_from_partial_data},
     utils::{decimal_string_to_field, get_domain_start_index_in_email},
     nullifier_generator::{
         generate_nullifier_with_poseidon2,
@@ -50,11 +51,9 @@ fn main(
     //ephemeral_pubkey_salt: Field,
     //ephemeral_pubkey_expiry: pub u32,
 ) -> pub Field {
-    // @dev - Remove the "zeros" from a given "partial_data" and "domain".
-    // let partial_data = partial_data.trim_zeros();
-    // let domain = domain.trim_zeros();
-    let _partial_data: BoundedVec<u8, _> = partial_data;
-    let _domain: BoundedVec<u8, _> = domain;
+    // @dev - Remove extra zeros, which are added to an original "partial_data" when it is inputted from the frontend, from an original "partial_data"
+    let _partial_data: BoundedVec<u8, MAX_PARTIAL_DATA_LENGTH> = unsafe { remove_extra_zeros_from_partial_data(partial_data) };
+    //println(f"_partial_data: {_partial_data}\n");
 
     // Init JWT struct and verify signature
     let jwt = JWT::init_with_partial_hash(
