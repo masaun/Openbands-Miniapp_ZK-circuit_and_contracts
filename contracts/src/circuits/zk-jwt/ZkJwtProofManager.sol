@@ -13,8 +13,9 @@ contract ZkJwtProofManager {
 
     // @dev - Storages
     mapping(bytes32 nullifierHash => DataType.PublicInput) public publicInputsOfZkJwtProofs;     // nullifierHash -> PublicInput    
-    mapping(bytes32 nullifierHash => bool isNullified) public nullifiers;                        
-    mapping(string domain => mapping(string emailHash => mapping(address walletAddress => bytes32 nullifierHash))) public nullifiersByDomainAndEmailHashAndWalletAddresses;
+    mapping(bytes32 nullifierHash => bool isNullified) public nullifiers;
+    mapping(string domain => mapping(address walletAddress => bytes32 nullifierHash)) public nullifiersByDomainAndWalletAddresses;
+    //mapping(string domain => mapping(string emailHash => mapping(address walletAddress => bytes32 nullifierHash))) public nullifiersByDomainAndEmailHashAndWalletAddresses;
     DataType.PublicInput[] public publicInputsOfAllProofs;  // The publicInputs of all ZK-JWT proofs to show the list of all proofs related data on FE (front-end).
 
     constructor(
@@ -43,7 +44,7 @@ contract ZkJwtProofManager {
         //publicInput.jwtPubkeyModulusLimbs = separatedPublicInputs.jwtPubkeyModulusLimbs;
         publicInput.domain = separatedPublicInputs.domain;
         publicInput.nullifierHash = separatedPublicInputs.nullifierHash;
-        publicInput.emailHash = separatedPublicInputs.emailHash;
+        //publicInput.emailHash = separatedPublicInputs.emailHash;
         publicInput.walletAddress = separatedPublicInputs.walletAddress;
         publicInput.createdAt = separatedPublicInputs.createdAt;
         //publicInput.createdAt = block.timestamp;
@@ -58,7 +59,8 @@ contract ZkJwtProofManager {
         nullifiers[publicInput.nullifierHash] = true;
 
         // @dev - Store a given nullifierHash
-        nullifiersByDomainAndEmailHashAndWalletAddresses[publicInput.domain][publicInput.emailHash][msg.sender] = publicInput.nullifierHash;
+        nullifiersByDomainAndWalletAddresses[publicInput.domain][msg.sender] = publicInput.nullifierHash;
+        //nullifiersByDomainAndEmailHashAndWalletAddresses[publicInput.domain][publicInput.emailHash][msg.sender] = publicInput.nullifierHash;
 
         // @dev - Store the publicInputs into the list of all proofs to be displayed on the UI (front-end).
         publicInputsOfAllProofs.push(publicInput);
@@ -83,11 +85,18 @@ contract ZkJwtProofManager {
     }
 
     /**
+     * @notice - Retrieve the nullifierHash by a caller's wallet address, domain.
+     */
+    function getNullifiersByDomainAndWalletAddresses(string memory domain) public view returns (bytes32 _nullifierHash) {
+        return nullifiersByDomainAndWalletAddresses[domain][msg.sender];
+    }
+
+    /**
      * @notice - Retrieve the nullifierHash by a caller's wallet address, domain, email hash.
      */
-    function getNullifiersByDomainAndEmailHashAndWalletAddresses(string memory domain, string memory emailHash) public view returns (bytes32 _nullifierHash) {
-        return nullifiersByDomainAndEmailHashAndWalletAddresses[domain][emailHash][msg.sender];
-    }
+    // function getNullifiersByDomainAndEmailHashAndWalletAddresses(string memory domain, string memory emailHash) public view returns (bytes32 _nullifierHash) {
+    //     return nullifiersByDomainAndEmailHashAndWalletAddresses[domain][emailHash][msg.sender];
+    // }
 
     /**
      * @notice - Retrieve the publicInputs of all proofs from on-chain to be displayed on the UI (front-end).
