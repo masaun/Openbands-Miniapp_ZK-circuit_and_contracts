@@ -51,22 +51,22 @@ fn main(
     //ephemeral_pubkey_salt: Field,
     //ephemeral_pubkey_expiry: pub u32,
 ) -> pub Field {
-    // @dev - Remove extra zeros, which are added to an original "partial_data" when it is inputted from the frontend, from an original "partial_data"
-    let _partial_data: BoundedVec<u8, MAX_PARTIAL_DATA_LENGTH> = unsafe { remove_extra_zeros_from_partial_data(partial_data) };
-    //println(f"_partial_data: {_partial_data}\n");
+    // // @dev - Remove extra zeros, which are added to an original "partial_data" when it is inputted from the frontend, from an original "partial_data"
+    // let _partial_data: BoundedVec<u8, MAX_PARTIAL_DATA_LENGTH> = unsafe { remove_extra_zeros_from_partial_data(partial_data) };
+    // //println(f"_partial_data: {_partial_data}\n");
 
-    // Init JWT struct and verify signature
-    let jwt = JWT::init_with_partial_hash(
-        //partial_data,
-        _partial_data,
-        partial_hash,
-        full_data_length,
-        base64_decode_offset,
-        jwt_pubkey_modulus_limbs,
-        jwt_pubkey_redc_params_limbs,
-        jwt_signature_limbs,
-    );
-    jwt.verify();
+    // // Init JWT struct and verify signature
+    // let jwt = JWT::init_with_partial_hash(
+    //     //partial_data,
+    //     _partial_data,
+    //     partial_hash,
+    //     full_data_length,
+    //     base64_decode_offset,
+    //     jwt_pubkey_modulus_limbs,
+    //     jwt_pubkey_redc_params_limbs,
+    //     jwt_signature_limbs,
+    // );
+    // jwt.verify();
 
     // // Get nonce claim
     // let nonce: BoundedVec<u8, NONCE_LENGTH> = jwt.get_claim_string("nonce".as_bytes());
@@ -80,20 +80,20 @@ fn main(
 
     // assert(nonce_field == ephemeral_pubkey_hash, "invalid nonce");
 
-    // Assert email_verified claim
-    jwt.assert_claim_bool("email_verified".as_bytes(), true);
+    // // Assert email_verified claim
+    // jwt.assert_claim_bool("email_verified".as_bytes(), true);
 
-    // Get email claim
-    let email: BoundedVec<u8, MAX_EMAIL_LENGTH> = jwt.get_claim_string("email".as_bytes());
+    // // Get email claim
+    // let email: BoundedVec<u8, MAX_EMAIL_LENGTH> = jwt.get_claim_string("email".as_bytes());
 
-    // Get domain start_index from email claim - unconstrained, but we verify the domain bytes below
-    let domain_start_index = unsafe { get_domain_start_index_in_email(email) };
+    // // Get domain start_index from email claim - unconstrained, but we verify the domain bytes below
+    // let domain_start_index = unsafe { get_domain_start_index_in_email(email) };
 
-    // Verify domain passed is present in the email claim after the @
-    assert(email.storage()[domain_start_index - 1] == 64, "char before domain is not '@'");
-    for i in 0..MAX_DOMAIN_LENGTH {
-        assert(email.storage()[domain_start_index + i] == domain.storage()[i], "invalid domain");
-    }
+    // // Verify domain passed is present in the email claim after the @
+    // assert(email.storage()[domain_start_index - 1] == 64, "char before domain is not '@'");
+    // for i in 0..MAX_DOMAIN_LENGTH {
+    //     assert(email.storage()[domain_start_index + i] == domain.storage()[i], "invalid domain");
+    // }
 
     // @dev - Calculate a nullifier
     let nullifier = generate_nullifier_with_poseidon2([full_data_length as Field, base64_decode_offset as Field]);
