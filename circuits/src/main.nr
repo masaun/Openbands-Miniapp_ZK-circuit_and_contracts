@@ -11,7 +11,9 @@ use zk_jwt::{
 };
 
 use jwt::JWT;
-use std::hash::poseidon2::Poseidon2;
+
+use poseidon::poseidon2;                 // @dev - For v1.0.0-beta.11 of Noir/Nargo, we need to use this module for Poseidon hash
+//use std::hash::poseidon2::Poseidon2;   // @dev - For v1.0.0-beta.6 of Noir/Nargo, we are still able to use this module for Poseidon hash
 
 global MAX_PARTIAL_DATA_LENGTH: u32 = 640; // signed data length after partial SHA
 global MAX_DOMAIN_LENGTH: u32 = 64;
