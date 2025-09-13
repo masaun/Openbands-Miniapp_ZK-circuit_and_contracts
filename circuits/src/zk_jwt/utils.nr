@@ -1,6 +1,6 @@
 use crate::{MAX_EMAIL_LENGTH};
 
-fn decimal_string_to_field<let LEN: u32>(decimal_bytes: [u8; LEN]) -> Field {
+pub fn decimal_string_to_field<let LEN: u32>(decimal_bytes: [u8; LEN]) -> Field {
     assert(LEN <= 77);
 
     let mut field: Field = 0;
@@ -18,7 +18,7 @@ fn decimal_string_to_field<let LEN: u32>(decimal_bytes: [u8; LEN]) -> Field {
     field
 }
 
-unconstrained fn get_domain_start_index_in_email(email: BoundedVec<u8, MAX_EMAIL_LENGTH>) -> u32 {
+unconstrained pub fn get_domain_start_index_in_email(email: BoundedVec<u8, MAX_EMAIL_LENGTH>) -> u32 {
     let mut domain_start_index = 0;
     for i in 0..MAX_EMAIL_LENGTH {
         if email.storage()[i] == ("@".as_bytes())[0] {
