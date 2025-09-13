@@ -54,13 +54,13 @@ fn main(
     //ephemeral_pubkey_expiry: pub u32,
 ) -> pub Field {
     // @dev - Remove extra zeros, which are added to an original "partial_data" when it is inputted from the frontend, from an original "partial_data"
-    //let _partial_data: BoundedVec<u8, MAX_PARTIAL_DATA_LENGTH> = unsafe { remove_extra_zeros_from_partial_data(partial_data) };
-    //println(f"_partial_data: {_partial_data}\n");
+    let _partial_data: BoundedVec<u8, MAX_PARTIAL_DATA_LENGTH> = unsafe { remove_extra_zeros_from_partial_data(partial_data) };
+    println(f"_partial_data: {_partial_data}\n");
 
     // Init JWT struct and verify signature
     let jwt = JWT::init_with_partial_hash(
-        partial_data,
-        //_partial_data,
+        //partial_data,
+        _partial_data,
         partial_hash,
         full_data_length,
         base64_decode_offset,
