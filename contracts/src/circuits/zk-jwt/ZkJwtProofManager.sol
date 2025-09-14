@@ -13,7 +13,8 @@ contract ZkJwtProofManager {
 
     // @dev - Storages
     mapping(bytes32 nullifierHash => DataType.PublicInput) public publicInputsOfZkJwtProofs;     // nullifierHash -> PublicInput    
-    mapping(bytes32 nullifierHash => bool isNullified) public nullifiers;                        
+    mapping(bytes32 nullifierHash => bool isNullified) public nullifiers;
+    mapping(string domain => mapping(address walletAddress => bytes32 nullifierHash)) public nullifiersByDomainAndWalletAddresses;                  
     mapping(string domain => mapping(string emailHash => mapping(address walletAddress => bytes32 nullifierHash))) public nullifiersByDomainAndEmailHashAndWalletAddresses;
     DataType.PublicInput[] public publicInputsOfAllProofs;  // The publicInputs of all ZK-JWT proofs to show the list of all proofs related data on FE (front-end).
 
@@ -83,9 +84,16 @@ contract ZkJwtProofManager {
     }
 
     /**
+     * @notice - Retrieve the nullifierHash by a caller's wallet address and domain.
+     */
+    function getNullifiersByDomainAndWalletAddress(string memory domain) public view returns (bytes32 _nullifierHash) {
+        return nullifiersByDomainAndWalletAddresses[domain][msg.sender];
+    }
+
+    /**
      * @notice - Retrieve the nullifierHash by a caller's wallet address, domain, email hash.
      */
-    function getNullifiersByDomainAndEmailHashAndWalletAddresses(string memory domain, string memory emailHash) public view returns (bytes32 _nullifierHash) {
+    function getNullifiersByDomainAndEmailHashAndWalletAddress(string memory domain, string memory emailHash) public view returns (bytes32 _nullifierHash) {
         return nullifiersByDomainAndEmailHashAndWalletAddresses[domain][emailHash][msg.sender];
     }
 
