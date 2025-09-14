@@ -11,7 +11,9 @@ use zk_jwt::{
 };
 
 use jwt::JWT;
-use std::hash::poseidon2::Poseidon2;
+
+use poseidon::poseidon2;                 // @dev - For v1.0.0-beta.11 of Noir/Nargo, we need to use this module for Poseidon hash
+//use std::hash::poseidon2::Poseidon2;   // @dev - For v1.0.0-beta.6 of Noir/Nargo, we are still able to use this module for Poseidon hash
 
 global MAX_PARTIAL_DATA_LENGTH: u32 = 640; // signed data length after partial SHA
 global MAX_DOMAIN_LENGTH: u32 = 64;
@@ -53,7 +55,7 @@ fn main(
 ) -> pub Field {
     // @dev - Remove extra zeros, which are added to an original "partial_data" when it is inputted from the frontend, from an original "partial_data"
     let _partial_data: BoundedVec<u8, MAX_PARTIAL_DATA_LENGTH> = unsafe { remove_extra_zeros_from_partial_data(partial_data) };
-    //println(f"_partial_data: {_partial_data}\n");
+    println(f"_partial_data: {_partial_data}\n");
 
     // Init JWT struct and verify signature
     let jwt = JWT::init_with_partial_hash(

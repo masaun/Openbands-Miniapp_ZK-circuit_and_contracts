@@ -7,7 +7,7 @@ use crate::{
  * @dev - Test values for the main function, which is extracted from the log of FE on the OpenBands MiniApp
  *
  */
-global PARTIAL_DATA: BoundedVec<u8, MAX_PARTIAL_DATA_LENGTH> = BoundedVec::from_array([
+pub global PARTIAL_DATA: BoundedVec<u8, MAX_PARTIAL_DATA_LENGTH> = BoundedVec::from_array([
     84,
     89,
     52,
@@ -650,7 +650,7 @@ global PARTIAL_DATA: BoundedVec<u8, MAX_PARTIAL_DATA_LENGTH> = BoundedVec::from_
     0
 ]);
 
-global PARTIAL_HASH: [u32; 8] = [
+pub global PARTIAL_HASH: [u32; 8] = [
     1609245040,
     3661959568,
     735193138,
@@ -661,11 +661,11 @@ global PARTIAL_HASH: [u32; 8] = [
     1633559242
 ];
 
-global FULL_DATA_LENGTH: u32 = 850;
+pub global FULL_DATA_LENGTH: u32 = 850;
 
-global BASE64_DECODE_OFFSET: u32 = 3;
+pub global BASE64_DECODE_OFFSET: u32 = 3;
 
-global JWT_PUBKEY_MODULUS_LIMBS: [u128; 18] = [
+pub global JWT_PUBKEY_MODULUS_LIMBS: [u128; 18] = [
     1213975392181546471809619799878153527,
     358422173023202284521765904529583293,
     476155355328802892514624238808414060,
@@ -686,7 +686,7 @@ global JWT_PUBKEY_MODULUS_LIMBS: [u128; 18] = [
     180
 ];
 
-global JWT_PUBKEY_REDC_PARAMS_LIMBS: [u128; 18] = [
+pub global JWT_PUBKEY_REDC_PARAMS_LIMBS: [u128; 18] = [
     1122552934934991072046194883668782832,
     65006897503511157030269974049018131,
     755838925143718050590223605302800491,
@@ -707,7 +707,7 @@ global JWT_PUBKEY_REDC_PARAMS_LIMBS: [u128; 18] = [
     5809
 ];
 
-global JWT_SIGNATURE_LIMBS: [u128; 18] = [
+pub global JWT_SIGNATURE_LIMBS: [u128; 18] = [
     547292674985791745373229820705068152,
     485699350896842306529822672050335158,
     612607930493816743244080939634444035,
@@ -728,7 +728,7 @@ global JWT_SIGNATURE_LIMBS: [u128; 18] = [
     142
 ];
 
-global DOMAIN: BoundedVec<u8, MAX_DOMAIN_LENGTH>  = BoundedVec::from_array([
+pub global DOMAIN: BoundedVec<u8, MAX_DOMAIN_LENGTH>  = BoundedVec::from_array([
     103,
     109,
     97,
