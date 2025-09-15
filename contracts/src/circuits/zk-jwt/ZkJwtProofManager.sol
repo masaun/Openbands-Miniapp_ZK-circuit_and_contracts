@@ -59,6 +59,9 @@ contract ZkJwtProofManager {
         nullifiers[publicInput.nullifierHash] = true;
 
         // @dev - Store a given nullifierHash
+        nullifiersByDomainAndWalletAddresses[publicInput.domain][msg.sender] = publicInput.nullifierHash;
+
+        // @dev - Store a given nullifierHash
         nullifiersByDomainAndEmailHashAndWalletAddresses[publicInput.domain][publicInput.emailHash][msg.sender] = publicInput.nullifierHash;
 
         // @dev - Store the publicInputs into the list of all proofs to be displayed on the UI (front-end).
