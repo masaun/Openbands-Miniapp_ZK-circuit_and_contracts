@@ -89,15 +89,15 @@ contract ZkJwtProofManager {
     /**
      * @notice - Retrieve the nullifierHash by a caller's wallet address and domain.
      */
-    function getNullifiersByDomainAndWalletAddress(string memory domain) public view returns (bytes32 _nullifierHash) {
-        return nullifiersByDomainAndWalletAddresses[domain][msg.sender];
+    function getNullifiersByDomainAndWalletAddress(string memory domain, address walletAddress) public view returns (bytes32 _nullifierHash) {
+        return nullifiersByDomainAndWalletAddresses[domain][walletAddress];
     }
 
     /**
      * @notice - Retrieve the nullifierHash by a caller's wallet address, domain, email hash.
      */
-    function getNullifiersByDomainAndEmailHashAndWalletAddress(string memory domain, string memory emailHash) public view returns (bytes32 _nullifierHash) {
-        return nullifiersByDomainAndEmailHashAndWalletAddresses[domain][emailHash][msg.sender];
+    function getNullifiersByDomainAndEmailHashAndWalletAddress(string memory domain, string memory emailHash, address walletAddress) public view returns (bytes32 _nullifierHash) {
+        return nullifiersByDomainAndEmailHashAndWalletAddresses[domain][emailHash][walletAddress];
     }
 
     /**
