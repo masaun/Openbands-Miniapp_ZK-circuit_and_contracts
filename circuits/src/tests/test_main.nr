@@ -1,6 +1,6 @@
 use crate::{
     main,
-    MAX_PARTIAL_DATA_LENGTH, MAX_DOMAIN_LENGTH,
+    MAX_PARTIAL_DATA_LENGTH, MAX_DOMAIN_LENGTH, MAX_EMAIL_LENGTH,
     zk_jwt
 };
 
@@ -53,6 +53,19 @@ pub fn test_main() {
     //let _partial_data: BoundedVec<u8, MAX_PARTIAL_DATA_LENGTH> = unsafe { remove_extra_zeros_from_partial_data(partial_data) };
     //println(f"_partial_data: {_partial_data}\n");
 
+    // @dev - Extract email from JWT and convert it to Field
+    let email_vec: BoundedVec<u8, MAX_EMAIL_LENGTH> = zk_jwt::email_extractor_from_jwt::extract_email_from_jwt_in_vec(
+        partial_data,
+        partial_hash,
+        full_data_length,
+        base64_decode_offset,
+        jwt_pubkey_modulus_limbs,
+        jwt_pubkey_redc_params_limbs,
+        jwt_signature_limbs,
+        //domain
+    );
+    let email_field: Field = zk_jwt::email_extractor_from_jwt::convert_email_vec_to_field(email_vec);
+
     // @dev - Execute the main() function
     let nullifier = main(
         partial_data,
@@ -67,14 +80,14 @@ pub fn test_main() {
     );
     println(f"nullifier: {nullifier}\n");
 
-    let nullifier_via_poseidon = generate_nullifier_with_poseidon2([full_data_length as Field, base64_decode_offset as Field]);
-    println(f"nullifier_via_poseidon: {nullifier_via_poseidon}\n");
+    let nullifier_via_poseidon2 = generate_nullifier_with_poseidon2([email_field, full_data_length as Field, base64_decode_offset as Field]);
+    println(f"nullifier_via_poseidon2: {nullifier_via_poseidon2}\n");
 
     //let nullifier_via_pedersen = generate_nullifier_with_pedersen([full_data_length as Field, base64_decode_offset as Field]);
     //println(f"nullifier_via_pedersen: {nullifier_via_pedersen}\n");
 
     // Assert the expected nullifier
-    assert(nullifier == nullifier_via_poseidon, "Invalid nullifier");
+    assert(nullifier == nullifier_via_poseidon2, "Invalid nullifier");
     //assert(nullifier == nullifier_via_pedersen, "Invalid nullifier");
 }
 
@@ -100,9 +113,22 @@ pub fn test_nullifier_generation() {
     // let jwt_signature_limbs: [u128; 18] = JWT_SIGNATURE_LIMBS;
     // let domain: BoundedVec<u8, MAX_DOMAIN_LENGTH> = DOMAIN;
 
-    let nullifier_via_poseidon = generate_nullifier_with_poseidon2([full_data_length as Field, base64_decode_offset as Field]);
-    println(f"nullifier_via_poseidon: {nullifier_via_poseidon}\n");
+    // @dev - Extract email from JWT and convert it to Field
+    let email_vec: BoundedVec<u8, MAX_EMAIL_LENGTH> = zk_jwt::email_extractor_from_jwt::extract_email_from_jwt_in_vec(
+        partial_data,
+        partial_hash,
+        full_data_length,
+        base64_decode_offset,
+        jwt_pubkey_modulus_limbs,
+        jwt_pubkey_redc_params_limbs,
+        jwt_signature_limbs,
+        //domain
+    );
+    let email_field: Field = zk_jwt::email_extractor_from_jwt::convert_email_vec_to_field(email_vec);
 
-    let nullifier_via_pedersen = generate_nullifier_with_pedersen([full_data_length as Field, base64_decode_offset as Field]);
-    println(f"nullifier_via_pedersen: {nullifier_via_pedersen}\n");
+    let nullifier_via_poseidon2 = generate_nullifier_with_poseidon2([email_field, full_data_length as Field, base64_decode_offset as Field]);
+    println(f"nullifier_via_poseidon2: {nullifier_via_poseidon2}\n");
+
+    let nullifier_via_pedersen2 = generate_nullifier_with_pedersen([email_field, full_data_length as Field, base64_decode_offset as Field]);
+    println(f"nullifier_via_pedersen2: {nullifier_via_pedersen2}\n");
 }

@@ -97,11 +97,17 @@ fn main(
         assert(email.storage()[domain_start_index + i] == domain.storage()[i], "invalid domain");
     }
 
+    // @dev - Email
+    let email_bytes: [u8; MAX_EMAIL_LENGTH] = email.storage();
+    println(f"email_bytes: {email_bytes}\n");
+    let email_field: Field = Field::from_be_bytes(email_bytes);
+    println(f"email_field: {email_field}\n");
+
     // @dev - Calculate a nullifier
-    let nullifier = generate_nullifier_with_poseidon2([full_data_length as Field, base64_decode_offset as Field]);
+    let nullifier = generate_nullifier_with_poseidon2([email_field, full_data_length as Field, base64_decode_offset as Field]);
+    //let nullifier = generate_nullifier_with_poseidon2([full_data_length as Field, base64_decode_offset as Field]);
     //let nullifier = generate_nullifier_with_pedersen([full_data_length as Field, base64_decode_offset as Field]);
     //let nullifier = generate_nullifier([ephemeral_pubkey_hash, full_data_length as Field, base64_decode_offset as Field]);
-    //let nullifier: Field = 1; // [NOTE]: This is a test value
 
     // @dev - Return the nullifier
     nullifier
